@@ -4,7 +4,7 @@ from celery import shared_task
 
 
 @shared_task
-def deployer_script(instance):
+def deployer_script():
   # Access instance data if needed for the script
   # ...
   result = run("./shared.sh", shell=True)
