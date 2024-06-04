@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-rvu&_b_t)0km3sr!v5ii)2)4)pv!s&x1q%3=^$knk98vxqe#t8
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "158.220.114.235"
+    # "158.220.114.235"
 ]
 
 

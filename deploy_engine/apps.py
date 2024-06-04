@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from django.db.models.signals import post_save
+# from django.db.models.signals import post_save
 
 
 class DeployEngineConfig(AppConfig):
@@ -7,5 +7,6 @@ class DeployEngineConfig(AppConfig):
     name = 'deploy_engine'
 
     def ready(self):
-        from .signals import handle_model_save
-        post_save.connect(handle_model_save)
+        # from .signals import handle_model_save
+        # post_save.connect(handle_model_save)
+        from deploy_engine import signals

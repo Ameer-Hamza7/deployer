@@ -7,4 +7,5 @@ from .tasks import deployer_script
 @receiver(post_save, sender=AppDeploymentHistory)  # Replace YourModel with your actual model
 def handle_model_save(sender, instance, created, **kwargs):
   if created:
+    print("handle_model_save ..........................", instance)
     deployer_script.delay()
