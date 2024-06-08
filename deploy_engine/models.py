@@ -12,6 +12,7 @@ class AppDeploymentHistory(models.Model):
     app_name = models.CharField(verbose_name=_("Application Name"), max_length=225, null=False, blank=False)
     source_branch = models.CharField(verbose_name=_("Source Branch"), max_length=225, null=False, blank=False)
     build_tag = models.CharField(verbose_name=_("Tag"), max_length=225, null=False, blank=False)
+    pushed_at = models.CharField(verbose_name=_("Tag"), max_length=225, null=False, blank=False)
     build_status = models.CharField(verbose_name=_("Build Status"), max_length=225, choices=BUILD_STATUS_CHOICES)
     # encryption_key = models.CharField(verbose_name=_("Encryption Key") ,max_length=80)
 

@@ -8,14 +8,14 @@ from .models import AppDeploymentHistory
 @api_view(['POST'])
 @csrf_exempt
 def create_deployment(request):
-    print("data :----------->", request.data)
+    push_detail = request.data.get("push_data")
     repo_detail = request.data.get("repository")
-    print('data :-----------> ', request.data)
     try:
         AppDeploymentHistory.objects.create(
             app_name=repo_detail.get("name"),
             source_branch=repo_detail.get("repo_name"),
-            build_tag=repo_detail.get("date_created"),
+            build_tag=push_detail.get("tag"),
+            pushed_at=push_detail.get("pushed_at"),
             build_status=repo_detail.get("status")
         )
         return Response({"message" : "SUCCESS"}, status=status.HTTP_201_CREATED)
