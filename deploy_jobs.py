@@ -19,5 +19,5 @@ for row in rows:
     print(row)
 
 import subprocess
-output = subprocess.call(["source jobs/shared.sh"])
+output = subprocess.call(["/root/xtremeanalytix/deployer/deployer/jobs/shared.sh"])
 print(output)
