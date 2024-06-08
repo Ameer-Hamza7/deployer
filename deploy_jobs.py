@@ -17,3 +17,7 @@ conn.commit()
 conn.close()
 for row in rows:
     print(row)
+
+import subprocess
+output = subprocess.call(["source jobs/shared.sh"])
+print(output)
