@@ -4,10 +4,9 @@ from django.utils.translation import gettext_lazy as _
 
 class AppDeploymentHistory(models.Model):
     BUILD_STATUS_CHOICES = (
-        ("ST", "Start"),
-        ("PE", "Pending"),
-        ("SC", "SUCCESS"),
-        ("FL", "FAILED"),
+        ("Active", "Active"),
+        ("Success", "Success"),
+        ("Failed", "Failed"),
     )
 
     app_name = models.CharField(verbose_name=_("Application Name"), max_length=225, null=False, blank=False)
