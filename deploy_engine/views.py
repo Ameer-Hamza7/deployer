@@ -8,7 +8,9 @@ from .models import AppDeploymentHistory
 @api_view(['POST'])
 @csrf_exempt
 def create_deployment(request):
+    print("data :----------->", request.data)
     repo_detail = request.data.get("repository")
+    print('data :-----------> ', request.data)
     try:
         AppDeploymentHistory.objects.create(
             app_name=repo_detail.get("name"),
