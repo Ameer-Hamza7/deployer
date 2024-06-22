@@ -2,7 +2,6 @@ import psycopg2
 import subprocess
 import time
 
-
 # Establishing a db connection
 conn = psycopg2.connect(database = "deployer", 
                         user = "postgres", 
@@ -11,25 +10,24 @@ conn = psycopg2.connect(database = "deployer",
                         port = 6432)
 
 cur = conn.cursor()
-
 select_sql = "SELECT * FROM public.deploy_engine_appdeploymenthistory WHERE build_status = 'Active';"
 cur.execute(select_sql)
 rows = cur.fetchall()
 conn.commit()
 for row in rows:
     try:
-        output = subprocess.call(["/root/xtremeanalytix/deployer/deployer/jobs/data_bridge.sh"])
+        print("running deploy jobs: ----------> " )
+        output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/data_bridge.sh"])
+        if output.returncode == 0:
+            print("data bridge deployer.sh: ----------> ", output)
         update_sql = f"UPDATE public.deploy_engine_appdeploymenthistory SET build_status = 'Success' WHERE id = {row[0]};"
         cur.execute(update_sql)
         conn.commit()
-        time.sleep(2)
+        print("data bridge deployer.sh: ----------> ")
+        time.sleep(5)
     except Exception as e:
-        update_sql = f"UPDATE public.deploy_engine_appdeploymenthistory SET build_status = 'Success' WHERE id = {row[0]};"
+        update_sql = f"UPDATE public.deploy_engine_appdeploymenthistory SET build_status = 'Failed' WHERE id = {row[0]};"
         cur.execute(update_sql)
         conn.commit()
-        print(e)
-    print('ROW : ------------> ', row)
-    print('OUTPUT : ------------> ', output)
+        print(":------------------>", e)
 conn.close()
-
-print("Hey I might get called.........")

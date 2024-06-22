@@ -1,4 +1,7 @@
 #!/bin/bash
-docker login  
-cd /root/xtremeanalytix/XtremeAnalytixBridge/xtremeanalytix-data-bridge && docker-cmpose up --force-recreate --always-recreate-deps --remove-orphans
-docker image prune
+echo 'login to docker ...........'
+docker login
+echo 'refreshing and recreatings data_bridge containers and images'
+cd /root/xtremeanalytix/XtremeAnalytixBridge/xtremeanalytix-data-bridge && docker-compose pull && docker-compose up -d --force-recreate --always-recreate-deps
+echo 'cleaning all unsed images .........'
+docker image prune -a -f
