@@ -1,19 +1,19 @@
 version: '2.1'
 services:
-  database:
-    image: postgres:latest
-    ports:
-      - "6432:5432"
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: "dataanalytics_dev3"
-    volumes:
-      # - ../db-schema/01-init.sql:/docker-entrypoint-initdb.d/01-init.sql
-      # - ../db-schema/02-setup-data.sql:/docker-entrypoint-initdb.d/02-setup-data.sql
-      - dataanalytics-data:/var/lib/postgresql/data
-    networks:
-      - backend
+  # database:
+  #   image: postgres:latest
+  #   ports:
+  #     - "6432:5432"
+  #   environment:
+  #     POSTGRES_USER: "postgres"
+  #     POSTGRES_PASSWORD: "postgres"
+  #     POSTGRES_DB: "dataanalytics_dev3"
+  #   volumes:
+  #     # - ../db-schema/01-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+  #     # - ../db-schema/02-setup-data.sql:/docker-entrypoint-initdb.d/02-setup-data.sql
+  #     - dataanalytics-data:/var/lib/postgresql/data
+  #   networks:
+  #     - backend
   configserver:
     container_name: configserver
     image: theinnovativesolution/configserver:latest-dev
@@ -29,8 +29,6 @@ services:
     ports:
       - "9070:9070"
     depends_on:
-      database:
-        condition: service_healthy
       configserver:
         condition: service_started
     networks:
@@ -52,8 +50,6 @@ services:
     depends_on:
       configserver:
         condition: service_started
-      database:
-        condition: service_healthy
       eurekaserver:
         condition: service_started
     networks:
@@ -86,8 +82,6 @@ services:
     depends_on:
       configserver:
         condition: service_started
-      database:
-        condition: service_healthy
       eurekaserver:
         condition: service_started
     volumes:
@@ -110,8 +104,6 @@ services:
     depends_on:
       configserver:
         condition: service_started
-      database:
-        condition: service_healthy
       eurekaserver:
         condition: service_started
     networks:
