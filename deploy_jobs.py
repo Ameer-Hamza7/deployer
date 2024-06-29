@@ -42,15 +42,17 @@ def execute_deployment(app):
 # [(34, 'authservice', 'theinnovativesolution/authservice', 'latest-dev', 'Active', datetime.datetime(2024, 6, 27, 17, 25, 16, 824239, tzinfo=datetime.timezone.utc), datetime.datetime(2024, 6, 27, 8, 14, 58, 414071, tzinfo=datetime.timezone.utc), '1719476097')]
 
 for row in rows:
-    try:
-        output = execute_deployment(row[2])
-        if output.returncode == 0:
-            update_sql = f"UPDATE public.deploy_engine_appdeploymenthistory SET build_status = 'Success' WHERE id = {row[0]};"
+    from confg import DEPLOYMENT_SOURCE
+    if row[3] == DEPLOYMENT_SOURCE:
+        try:
+            output = execute_deployment(row[2])
+            if output.returncode == 0:
+                update_sql = f"UPDATE public.deploy_engine_appdeploymenthistory SET build_status = 'Success' WHERE id = {row[0]};"
+                cur.execute(update_sql)
+                conn.commit()
+                time.sleep(5)
+        except Exception as e:
+            update_sql = f"UPDATE public.deploy_engine_appdeploymenthistory SET build_status = 'Failed' WHERE id = {row[0]};"
             cur.execute(update_sql)
             conn.commit()
-            time.sleep(5)
-    except Exception as e:
-        update_sql = f"UPDATE public.deploy_engine_appdeploymenthistory SET build_status = 'Failed' WHERE id = {row[0]};"
-        cur.execute(update_sql)
-        conn.commit()
 conn.close()
