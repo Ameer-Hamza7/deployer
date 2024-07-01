@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3.5'
 services:
   # database:
   #   image: postgres:latest
@@ -21,6 +21,12 @@ services:
       - "127.0.0.1:9071:9071"
     environment:
       ENCRYPT_KEY: "fje83Ki8403Iod87dne7Yjsl3THueh48jfuO9j4U2hf64Lo"
+    healthcheck:
+      test: curl -f http://configserver:9071/actuator/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
     networks:
       - backend
   eurekaserver:
@@ -28,9 +34,15 @@ services:
     image: theinnovativesolution/eurekaserver:latest-dev
     ports:
       - "9070:9070"
+    healthcheck:
+      test: curl -f http://eureka:9070/actuator/health
+      interval: 30s
+      timeout: 20s
+      retries: 2
+    restart: always
     depends_on:
       configserver:
-        condition: service_started
+        condition: service_healthy
     networks:
       - backend
   gatewayserver:
@@ -38,6 +50,12 @@ services:
     image: theinnovativesolution/gatewayserver:latest-dev
     ports:
       - "9072:9072"
+    healthcheck:
+      test: curl -f http://gateway:9072/actuator/health
+      interval: 30s
+      timeout: 10s
+      retries: 4
+    restart: always
     env_file:
       - ./.env
     environment:
@@ -49,9 +67,9 @@ services:
       CONFIGSERVER_PORT: "9071"
     depends_on:
       configserver:
-        condition: service_started
+        condition: service_healthy
       eurekaserver:
-        condition: service_started
+        condition: service_healthy
     networks:
       - backend
   rabbitmq:
@@ -71,26 +89,34 @@ services:
     env_file:
       - ./.env
     environment:
-      _JAVA_OPTIONS: >
-        -Xdebug
-        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+#      _JAVA_OPTIONS: >
+#        -Xdebug
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
       SPRING_PROFILES_ACTIVE: "dev"
       CONFIGSERVER_URI: "http://configserver:9071"
       CONFIGSERVER_PORT: "9071"
       DATABASESERVER_PORT: "6432"
       ENCRYPT_KEY: "IMSYMMETRIC"
+#    healthcheck:
+#      test: curl -f http://dataanalytics:9080/actuator/health
+#      interval: 40s
+#      timeout: 10s
+#      retries: 4
+    restart: on-failure
     depends_on:
       configserver:
-        condition: service_started
+        condition: service_healthy
       eurekaserver:
-        condition: service_started
+        condition: service_healthy
+      gatewayserver:
+        condition: service_healthy
     volumes:
       - /Innovativesolutions/Dataanalytics/data/:/Innovativesolutions/Dataanalytics/data/
-    ports:
-      - "5005:5005"
+#    ports:
+#      - "5005:5005"
     networks:
       - backend
-  registrataionservice:
+  registrationservice:
     image: theinnovativesolution/authservice:latest-dev
     container_name: registration
     env_file:
@@ -103,14 +129,16 @@ services:
       ENCRYPT_KEY: "IMSYMMETRIC"
     depends_on:
       configserver:
-        condition: service_started
+        condition: service_healthy
       eurekaserver:
-        condition: service_started
+        condition: service_healthy
+      gatewayserver:
+        condition: service_healthy
     networks:
       - backend
 networks:
   backend:
     name: spring_network
-    driver: bridge
+    external: true
 volumes:
   dataanalytics-data:

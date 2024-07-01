@@ -21,25 +21,13 @@ def execute_deployment(app):
     output = None
     
     if app == 'theinnovativesolution/gatewayserver':
-        output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/microservices.sh", "gatewayserver"])
-    elif app == 'theinnovativesolution/configserver':
-        output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/microservices.sh", "configserver"])
-    elif app == 'theinnovativesolution/eurekaserver':
-        output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/microservices.sh", "eurekaserver"])
-    elif app == 'theinnovativesolution/authservice':
-        output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/microservices.sh", "registrataionservice"])
-    elif app == 'theinnovativesolution/dataanalytics':
-        output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/microservices.sh", "dataanalyticsservice"])
-    elif app == 'theinnovativesolution/visualisation_multivariate':
-        output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/visualization.sh", "multivariate"])
+        output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/microservices.sh"])
     elif app == 'theinnovativesolution/visualisation_univariate':
-        output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/visualization.sh", "univariate"])
+        output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/visualization.sh"])
     elif app == 'theinnovativesolution/xtremeanalytix_data_bridge':
         output = subprocess.run(["/root/xtremeanalytix/deployer/deployer/jobs/data_bridge.sh"])
     
     return output
-
-# [(34, 'authservice', 'theinnovativesolution/authservice', 'latest-dev', 'Active', datetime.datetime(2024, 6, 27, 17, 25, 16, 824239, tzinfo=datetime.timezone.utc), datetime.datetime(2024, 6, 27, 8, 14, 58, 414071, tzinfo=datetime.timezone.utc), '1719476097')]
 
 for row in rows:
     from confg import DEPLOYMENT_SOURCE
