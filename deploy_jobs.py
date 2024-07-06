@@ -1,13 +1,15 @@
+import os
 import psycopg2
 import subprocess
 import time
-
+from dotenv import load_dotenv
+load_dotenv()
 # Establishing a db connection
-conn = psycopg2.connect(database = "deployer", 
-                        user = "postgres", 
-                        host= "158.220.114.235",
-                        password = "postgres",
-                        port = 6432)
+conn = psycopg2.connect(database = os.getenv('DATABASE_NAME'), 
+                        user = os.getenv('USER_NAME'), 
+                        host= os.getenv('HOST'),
+                        password = os.getenv('PASSWORD'),
+                        port = os.getenv('PORT'))
 
 cur = conn.cursor()
 select_sql = "SELECT * FROM public.deploy_engine_appdeploymenthistory WHERE build_status = 'Active';"
