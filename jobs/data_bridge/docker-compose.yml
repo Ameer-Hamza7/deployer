@@ -1,0 +1,17 @@
+version: '3.5'
+services:
+  sparkdatabridge:
+    image: theinnovativesolution/xtremeanalytix_data_bridge:latest-dev
+    container_name: databridge
+    command: "python manage.py runserver 0.0.0.0:9052"
+    restart: always
+    ports:
+      - "9052:9052"
+    volumes:
+      - /Innovativesolutions/Dataanalytics/data:/Innovativesolutions/Dataanalytics/data
+    networks:
+      - backend
+networks:
+  backend:
+    name: spring_network
+    external: true

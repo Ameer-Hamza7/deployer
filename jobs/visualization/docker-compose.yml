@@ -9,6 +9,8 @@ services:
       - "8050:8050"
     networks:
       - visualisation
+    volumes:
+    - /root/xtremeanalytix/XtremeAnalytixConfig/config.json:/root/xtremeanalytix/XtremeAnalytixConfig/config.json
   multivariate:
     image: theinnovativesolution/visualisation_multivariate:latest-dev
     container_name: multivariate
@@ -18,6 +20,8 @@ services:
       - "8070:8070"
     networks:
       - visualisation
+    volumes:
+    - /root/xtremeanalytix/XtremeAnalytixConfig/config.json:/root/xtremeanalytix/XtremeAnalytixConfig/config.json
 networks:
   visualisation:
     name: spring_network
