@@ -6,7 +6,7 @@ services:
     command: "gunicorn -w 4 -b 0.0.0.0:8050 app:server"
     restart: always
     ports:
-      - "localhost 8050:8050"
+      - "9001:8050"
     networks:
       - visualisation
     volumes:
@@ -17,7 +17,7 @@ services:
     command: "gunicorn -w 4 -b 0.0.0.0:8070 app:server"
     restart: always
     ports:
-      - "locahost 8070:8070"
+      - "9002:8070"
     networks:
       - visualisation
     volumes:
