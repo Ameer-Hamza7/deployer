@@ -10,7 +10,7 @@ services:
     networks:
       - visualisation
     volumes:
-    - /root/xtremeanalytix/XtremeAnalytixConfig/config.json:/root/xtremeanalytix/XtremeAnalytixConfig/config.json
+      - /root/xtremeanalytix/XtremeAnalytixConfig/config.json:/root/xtremeanalytix/XtremeAnalytixConfig/config.json
   multivariate:
     image: theinnovativesolution/visualisation_multivariate:latest-prod
     container_name: multivariate
@@ -21,7 +21,7 @@ services:
     networks:
       - visualisation
     volumes:
-    - /root/xtremeanalytix/XtremeAnalytixConfig/config.json:/root/xtremeanalytix/XtremeAnalytixConfig/config.json
+      - /root/xtremeanalytix/XtremeAnalytixConfig/config.json:/root/xtremeanalytix/XtremeAnalytixConfig/config.json
 networks:
   visualisation:
     name: spring_network
