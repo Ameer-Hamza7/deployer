@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
-
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-rvu&_b_t)0km3sr!v5ii)2)4)pv!s&x1q%3=^$knk98vxqe#t8
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "158.220.114.235"
+    os.getenv('HOST')
 ]
 
 
@@ -80,11 +81,11 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'deployer',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '158.220.114.235',
-        'PORT': '6432'
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('USER_NAME'),
+        'PASSWORD': os.getenv('PASSWORD'),
+        'HOST': os.getenv('HOST'),
+        'PORT': os.getenv('PORT')
     }
 }
 

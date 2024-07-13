@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   sparkdatabridge:
-    image: theinnovativesolution/xtremeanalytix_data_bridge:latest-dev
+    image: theinnovativesolution/xtremeanalytix_data_bridge:latest-qa
     container_name: databridge
     command: "python manage.py runserver 0.0.0.0:9052"
     restart: always

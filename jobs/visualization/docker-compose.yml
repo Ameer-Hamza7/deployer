@@ -1,7 +1,7 @@
 version: "2.1"
 services:
   univariate:
-    image: theinnovativesolution/visualisation_univariate:latest-dev
+    image: theinnovativesolution/visualisation_univariate:latest-qa
     container_name: univariate
     command: "gunicorn -w 4 -b 0.0.0.0:8050 app:server"
     restart: always
@@ -12,7 +12,7 @@ services:
     volumes:
     - /root/xtremeanalytix/XtremeAnalytixConfig/config.json:/root/xtremeanalytix/XtremeAnalytixConfig/config.json
   multivariate:
-    image: theinnovativesolution/visualisation_multivariate:latest-dev
+    image: theinnovativesolution/visualisation_multivariate:latest-qa
     container_name: multivariate
     command: "gunicorn -w 4 -b 0.0.0.0:8070 app:server"
     restart: always

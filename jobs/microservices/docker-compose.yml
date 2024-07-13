@@ -16,7 +16,7 @@ services:
   #     - backend
   configserver:
     container_name: configserver
-    image: theinnovativesolution/configserver:latest-dev
+    image: theinnovativesolution/configserver:latest-qa
     ports:
       - "127.0.0.1:9071:9071"
     environment:
@@ -31,7 +31,7 @@ services:
       - backend
   eurekaserver:
     container_name: eureka
-    image: theinnovativesolution/eurekaserver:latest-dev
+    image: theinnovativesolution/eurekaserver:latest-qa
     ports:
       - "9070:9070"
     healthcheck:
@@ -47,7 +47,7 @@ services:
       - backend
   gatewayserver:
     container_name: gateway
-    image: theinnovativesolution/gatewayserver:latest-dev
+    image: theinnovativesolution/gatewayserver:latest-qa
     ports:
       - "9072:9072"
     healthcheck:
@@ -59,7 +59,7 @@ services:
     env_file:
       - ./.env
     environment:
-      SPRING_PROFILES_ACTIVE: "dev"
+      SPRING_PROFILES_ACTIVE: "qa"
       SERVER_PORT: "9072"
       CONFIGSERVER_URI: "http://configserver:9071"
       EUREKASERVER_URI: "http://eurekaserver:9070/eureka/"
@@ -84,7 +84,7 @@ services:
     networks:
       - backend
   dataanalyticsservice:
-    image: theinnovativesolution/dataanalytics:latest-dev
+    image: theinnovativesolution/dataanalytics:latest-qa
     container_name: dataanalytics
     env_file:
       - ./.env
@@ -92,7 +92,7 @@ services:
       _JAVA_OPTIONS: >
         -Xdebug
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
-      SPRING_PROFILES_ACTIVE: "dev"
+      SPRING_PROFILES_ACTIVE: "qa"
       CONFIGSERVER_URI: "http://configserver:9071"
       CONFIGSERVER_PORT: "9071"
       DATABASESERVER_PORT: "6432"
@@ -117,12 +117,12 @@ services:
     networks:
       - backend
   registrationservice:
-    image: theinnovativesolution/authservice:latest-dev
+    image: theinnovativesolution/authservice:latest-qa
     container_name: registration
     env_file:
       - ./.env
     environment:
-      SPRING_PROFILES_ACTIVE: "dev"
+      SPRING_PROFILES_ACTIVE: "qa"
       CONFIGSERVER_URI: "http://configserver:9071"
       CONFIGSERVER_PORT: "9071"
       DATABASESERVER_PORT: "6432"
