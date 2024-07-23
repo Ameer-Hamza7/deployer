@@ -1,1 +1,1 @@
-DEPLOYMENT_SOURCE = 'latest-dev'
+DEPLOYMENT_SOURCE = 'latest-qa'
